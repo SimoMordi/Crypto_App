@@ -2,7 +2,7 @@ import './marketStuff.css'
 import  { useState } from 'react';
 
 
-const SearchFilter = ({ onSearch, onFilterChange }) => {
+const SearchFilter = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [filter, setFilter] = useState('all');
 
@@ -18,6 +18,7 @@ const SearchFilter = ({ onSearch, onFilterChange }) => {
     onFilterChange(value);
   };
 
+  
   return (
     <div className="search-filter">
       <input
@@ -32,7 +33,7 @@ const SearchFilter = ({ onSearch, onFilterChange }) => {
         <option value="top_gainers">Top Gainers</option>
         <option value="top_losers">Top Losers</option>
         <option value="most_active">Most Active</option>
-        {/* Add more filter options as needed */}
+        
       </select>
     </div>
   );

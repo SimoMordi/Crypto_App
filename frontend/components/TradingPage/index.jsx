@@ -4,8 +4,7 @@ import { useCrypto } from "../../context/CryptoContext";
 
 
 const TradingPage = () => {
-  const { cryptocurrencies, setCryptocurrencies,
-    buyCrypto, sellCrypto, } = useCrypto();
+  const { cryptocurrencies, buyCrypto, sellCrypto, } = useCrypto();
   const [selectedSymbol, setSelectedSymbol] = useState('');
   const [amount, setAmount] = useState(0);
 

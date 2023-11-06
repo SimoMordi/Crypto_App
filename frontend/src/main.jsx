@@ -5,18 +5,22 @@ import './index.css'
 import { BrowserRouter as Router } from 'react-router-dom'
 import { AuthProvider } from '../context/AuthContext.jsx'
 import { CryptoProvider } from '../context/CryptoContext.jsx'
-import { PortfolioProvider } from '../context/PortfolioContext.jsx'
+import { DataProvider } from '../context/DataContext.jsx'
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
     <Router>
-     <CryptoProvider>
-        <AuthProvider>
-          <PortfolioProvider>
-           <App />
-          </PortfolioProvider>
-         </AuthProvider>
-      </CryptoProvider>
+
+      <DataProvider>
+        <CryptoProvider>
+         <AuthProvider>
+         
+            <App />
+         
+          </AuthProvider>
+        </CryptoProvider>
+      </DataProvider>
+
     </Router>    
   </React.StrictMode>,
 )

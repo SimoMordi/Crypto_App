@@ -1,26 +1,28 @@
-
 import './auth.css'
-import  { useState } from 'react';
+import { useState } from 'react';
 import { useAuth } from '../../context/AuthContext';
-
+import { useNavigate } from 'react-router-dom';
 
 const LoginPage = () => {
-  const { user, setUser,
-    isAuthenticated, setIsAuthenticated,
-    login, logout,} = useAuth()
+  const { login, isAuthenticated } = useAuth(); // Extract isAuthenticated here
+  const navigate = useNavigate();
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
 
   const handleLogin = async (event) => {
     event.preventDefault();
-    // Call the login function from AuthContext
-    await login(username, password);
-    // Redirect to homepage or show an error based on the login result
+    const result = await login(username, password); // login should return some result
+    // Check if login was successful based on the returned result
+    if (result.success) { // Adjust depending on how your login function signals success
+      navigate('/'); // Redirect to the homepage
+    } else {
+      console.log('Login failed'); // Placeholder for error handling
+    }
   };
 
   return (
-    <div  className="auth-page login-page">
-      <form  className="auth-form" onSubmit={handleLogin}>
+    <div className="auth-page login-page">
+      <form className="auth-form" onSubmit={handleLogin}>
         <label htmlFor="username">Username:</label>
         <input
           id="username"

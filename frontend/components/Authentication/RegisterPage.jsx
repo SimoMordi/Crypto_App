@@ -1,22 +1,29 @@
 
 import './auth.css'
-import React, { useState, useContext } from 'react';
+import  { useState } from 'react';
 import { useAuth } from '../../context/AuthContext';
+import { useNavigate } from 'react-router-dom';
 
 
 const RegisterPage = () => {
-  const {  user, setUser,
-    isAuthenticated, setIsAuthenticated,
-    login, logout, } = useAuth()
+  const { register } = useAuth();
+  const navigate = useNavigate();
   const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
   const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [error, setError] = useState(''); // To store any registration errors
 
   const handleRegister = async (event) => {
     event.preventDefault();
-    // Call the register function from AuthContext
-    await register(username, email, password);
-    // Redirect to login page or show an error based on the registration result
+    try {
+      // Attempt to register the user with the provided username, email, and password
+      await register(username, email, password);
+      // If registration is successful, redirect to the login page
+      navigate('/login');
+    } catch (err) {
+      // If registration fails
+      setError(err.message);
+    }
   };
 
   return (
@@ -43,6 +50,7 @@ const RegisterPage = () => {
           value={password}
           onChange={(e) => setPassword(e.target.value)}
         />
+         {error && <p className="error">{error}</p>} 
         <button type="submit">Register</button>
       </form>
     </div>

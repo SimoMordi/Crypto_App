@@ -1,8 +1,12 @@
-// CurrencyDetailCard.jsx
+
+import { useCrypto } from '../../context/CryptoContext';
 import './marketStuff.css';
 
 
-const CurrencyDetailCard = ({ crypto, buyCrypto, sellCrypto }) => {
+const CurrencyDetailCard = ( ) => {
+  const { buyCrypto, sellCrypto, } = useCrypto();
+
+
   return (
     <div className="currency-detail-card">
       <div className="crypto-header">

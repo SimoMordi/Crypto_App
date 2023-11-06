@@ -1,41 +1,42 @@
-// PortfolioPage.jsx
-
-import React from 'react';
-import { useAuth } from '../../context/AuthContext';
-import { usePortfolio } from '../../context/PortfolioContext';
-
-
+import { useState } from 'react';
+import { useData } from '../../context/DataContext';
 
 const PortfolioPage = () => {
-  const { holdings, addCurrency, removeCurrency, portfolioValue } = usePortfolio();
-  const { user, setUser,
-    isAuthenticated, setIsAuthenticated,
-    login, logout, } = useAuth();
+  const { data, setData } = useData();
+  
+  // You'll need state to handle the input from the form
+  const [currencyName, setCurrencyName] = useState('');
+  const [currencySymbol, setCurrencySymbol] = useState('');
+  const [currencyAmount, setCurrencyAmount] = useState('');
+  const [currencyPrice, setCurrencyPrice] = useState('');
 
-  // Function to handle adding a currency (would be called when a user submits a form)
-  const handleAddCurrency = (currencyData) => {
-    // Placeholder for currency data structure
+  // Function to handle adding a currency
+  const handleAddCurrency = () => {
     const newCurrency = {
       id: Date.now(), // temporary unique id
-      name: currencyData.name,
-      symbol: currencyData.symbol,
-      amount: currencyData.amount,
-      price: currencyData.price
+      name: currencyName,
+      symbol: currencySymbol,
+      amount: Number(currencyAmount),
+      price: Number(currencyPrice)
     };
-    addCurrency(newCurrency);
+    setData(prevData => [...prevData, newCurrency]);
+    // Reset the form fields
+    setCurrencyName('');
+    setCurrencySymbol('');
+    setCurrencyAmount('');
+    setCurrencyPrice('');
   };
 
   // Function to handle removing a currency
   const handleRemoveCurrency = (currencyId) => {
-    removeCurrency(currencyId);
+    setData(prevData => prevData.filter(currency => currency.id !== currencyId));
   };
 
   return (
     <div className="portfolio-page">
-      <h1>{user ? `${user.name}'s Portfolio` : 'My Portfolio'}</h1>
-      <h2>Total Value: ${portfolioValue.toFixed(2)}</h2>
+      <h1>My Portfolio</h1>
       <div className="currencies">
-        {holdings.map((currency) => (
+        {data.map((currency) => (
           <div key={currency.id} className="currency">
             <h2>{currency.name} - {currency.symbol}</h2>
             <p>Amount: {currency.amount}</p>
@@ -44,8 +45,34 @@ const PortfolioPage = () => {
           </div>
         ))}
       </div>
-      {/* You would have a form or another UI element to add currencies */}
-      <button onClick={() => handleAddCurrency({/* currency data */})}>Add Currency</button>
+      <div>
+        <h2>Add a New Currency</h2>
+        <input
+          type="text"
+          value={currencyName}
+          onChange={(e) => setCurrencyName(e.target.value)}
+          placeholder="Currency Name"
+        />
+        <input
+          type="text"
+          value={currencySymbol}
+          onChange={(e) => setCurrencySymbol(e.target.value)}
+          placeholder="Currency Symbol"
+        />
+        <input
+          type="number"
+          value={currencyAmount}
+          onChange={(e) => setCurrencyAmount(e.target.value)}
+          placeholder="Amount"
+        />
+        <input
+          type="number"
+          value={currencyPrice}
+          onChange={(e) => setCurrencyPrice(e.target.value)}
+          placeholder="Price"
+        />
+        <button onClick={handleAddCurrency}>Add Currency</button>
+      </div>
     </div>
   );
 };

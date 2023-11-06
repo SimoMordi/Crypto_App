@@ -67,12 +67,13 @@
     padding: 10px;
     margin-right: 10px;
     border: 1px solid #ddd;
-    border-radius: 5px;
+    border-radius: 15px;
+    width: 400px;
   }
   
   .filter-select {
     width: 200px;
     padding: 10px;
     border: 1px solid #ddd;
-    border-radius: 5px;
+    border-radius: 15px;
   }

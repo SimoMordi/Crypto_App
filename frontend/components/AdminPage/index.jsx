@@ -1,22 +1,17 @@
 import './index.css';
 import { useAuth } from '../../context/AuthContext';
 import { useCrypto } from '../../context/CryptoContext';
+import { Navigate } from 'react-router-dom';
 
 const AdminPage = () => {
   const { user, isAuthenticated } = useAuth();
-  const { cryptocurrencies, setCryptocurrencies } = useCrypto();
+  const { cryptocurrencies} = useCrypto();
 
-  // Function to add a new cryptocurrency (would be called when a form is submitted)
-  const handleAddCryptocurrency = (newCrypto) => {
-    // Assuming newCrypto is an object with the new cryptocurrency data
-    setCryptocurrencies(prevCryptos => [...prevCryptos, newCrypto]);
-  };
+  if (!isAuthenticated || user.role !== 'admin') {
+    return <Navigate to="/login" replace />;
+  }
 
-  // Function to delete a cryptocurrency
-  const handleDeleteCryptocurrency = (cryptoId) => {
-    setCryptocurrencies(prevCryptos => prevCryptos.filter(crypto => crypto.id !== cryptoId));
-  };
-
+  
   return (
     <div className="admin-page">
       <h1>Admin Dashboard</h1>

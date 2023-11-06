@@ -7,7 +7,6 @@ require('./config/Db.js');
 const serverRoutes = require('./serverRoutes.js'); 
 const path = require('path');
 const PORT = 3000;
-
 const app = express();
 
 // Middleware
@@ -20,10 +19,17 @@ app.use('/api', serverRoutes)
 app.use(express.static(path.join(__dirname, "../frontend/dist")));
 
 
+
+
+
 // Catch-all route for SPA
 app.get('/*', (req, res) => {
     res.sendFile(path.join(__dirname, '../frontend/dist', 'index.html'));
 });
+
+
+
+
 
 // Start the server
 app.listen(PORT, () => {
