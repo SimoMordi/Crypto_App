@@ -29,5 +29,5 @@ const cryptoSchema = new mongoose.Schema({
 // Adding an index to the symbol field for faster queries
 cryptoSchema.index({ symbol: 1 });
 
-const CryptoModel = mongoose.model('Crypto', cryptoSchema);
-module.exports = CryptoModel;
+const currencyModel = mongoose.model('Cryptocurrency', cryptoSchema);
+module.exports = currencyModel;
